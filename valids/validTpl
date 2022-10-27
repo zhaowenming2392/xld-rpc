@@ -1,0 +1,75 @@
+package valids
+
+import (
+	"fmt"
+    "helpers.zhaowenming.cn/maps"
+)
+
+//XXValidator XX验证器
+//
+//验证
+//
+//还可以
+type XXValidator struct {
+	XX
+
+	*Validator
+}
+
+//创建XX验证器
+func NewXXValidator(params map[string]interface{}, v *Validator) ValidatorInterface {
+	//创建
+    dv := XXValidator{}
+	//设置默认值，包括Validator中某些属性的默认值
+    dv.Validator = v
+
+    //批量设置参数
+	err := maps.SetMapToStruct(params, &dv)
+	if err != nil {
+		panic("NewXXValidator err=" + err.Error())
+	}
+
+	return &dv
+}
+
+//Init 初始化检查，注意是在对具体验证器进行设置之后的相关逻辑方面初始化
+func (dv *DateValidator) Init() {
+	//父级初始化
+	dv.Validator.Init()
+
+	//初始化检查
+	if dv.Message == "" {
+		dv.Message = "{attribute} 格式无效！"
+	}
+
+    //其他逻辑初始化
+	if dv.XX == "" {
+		dv.XX = "XX"
+	}
+	
+	panic("Init 初始化")
+}
+
+//ValidateValue 验证某个值
+func (dv *DateValidator) ValidateValue(v interface{}) (msg string, formatParams map[string]string) {
+    //TODO 验证值
+
+    //返回错误消息模板+消息映射
+	return "", nil
+}
+
+//ValidateAttribute 验证模型中的属性
+func (dv *DateValidator) ValidateAttribute(m ModelInterface, f string) {
+    //获取属性值
+	value := m.GetAttributeValue(f)
+
+    //TODO 验证值
+
+    //如果需要，修改属性的值
+	m.SetAttributeValue(f, theV)
+
+    //如果有错误，添加错误
+    m.AddError(f, ev.formatMessage(ev.Message, map[string]string{
+        "value": fmt.Sprintf("%s", value),
+    }))
+}
